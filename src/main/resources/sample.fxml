@@ -1,0 +1,10 @@
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.*?>
+<GridPane fx:controller="Pong.Controller"
+          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10" stylesheets="main.css">
+    <Canvas fx:id="canvas" GridPane.columnIndex="0" GridPane.rowSpan="6" width="900" height="600"
+            onMouseDragged="#mouseMoves" onMousePressed="#mousePressed" onMouseReleased="#mouseReleased"/>
+    <Button GridPane.columnIndex="1" GridPane.rowIndex="0" text="Zagraj" onAction="#draw" minWidth="100"/>
+    <Button GridPane.columnIndex="1" GridPane.rowIndex="1" text="Zakończ" onAction="#clearGame" minWidth="100"/>
+</GridPane>
