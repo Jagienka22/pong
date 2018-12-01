@@ -2,15 +2,20 @@ package Pong;
 
 import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.effect.BlendMode;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+
+import java.awt.event.KeyEvent;
 
 /**
  * Created by aga on 27.11.18.
@@ -52,27 +57,45 @@ public class Controller {
         WritableImage wr = new WritableImage(900, 600);
         PixelWriter pw = wr.getPixelWriter();
 
-        for (int x = 4; x < weight + 4; x++) {
-            for (int y = 4; y < height + 4; y++) {
-                pw.setArgb(x, y, 0xFFFFFFFF);
-            }
-        }
+        narysujLewaPaletke(pw, 300-(height/2));
 
-        for (int x = 896; x >896 - weight;x--) {
-            for (int y = 596; y>596 - height ; y--) {
-                pw.setArgb(x, y, 0xFFFFFFFF);
-            }
-        }
-
-        for (int x = 447; x<459;x++) {
-            for (int y = 297; y<309; y++) {
-                pw.setArgb(x, y, 0xFFFFFFFF);
-            }
-        }
+        narysujPrawaPaletke(pw, 300+(height/2));
+// przy próbach robienia czegokolwiek zostawic karty w przegladarce ktore nie pomogly i wynomentowany
+// kod który nie działał - ma być go przynajmniej 4 próby na każdą rzecz
+        narysujPilke(pw, 100, 100);
 
 
         gc.setGlobalBlendMode(BlendMode.SRC_OVER);
         gc.drawImage(wr, 0, 0, 900, 600);
+    }
+
+    private void narysujPilke(PixelWriter pw, int kierunekX, int kierunekY) {
+        for (int x = 447 + kierunekX; x<459 + kierunekX;x++) { //czy to jest srodek planszy - jak nie to zmienic x i y
+            for (int y = 297 - kierunekY; y<309-kierunekY; y++) {//bedzie sie przemieszczal o jeden piksel w ukosie
+                pw.setArgb(x, y, 0xFFFFFFFF);//- wyestraktowac medote a potem przesunac o 10 w gore i prawo
+            }
+        }
+    }
+
+    //znalezc cos w javie fx do czytania klawiszy, jak ktos nacisnie klawisz "w" w aplikacji sout'nąć "w"
+
+    //dodaj 2 klawisze "P" i "L" i okno/pole tekstowe z "0 : 0" na pasku klawiszy
+    // i niech przyciścięcie "P" zwiększa prawą liczbę o 1 a "L" lewą
+
+    private void narysujPrawaPaletke(PixelWriter pw, int yp) {
+        for (int x = 896; x >896 - weight;x--) {
+            for (int y = yp; y>yp - height ; y--) {
+                pw.setArgb(x, y, 0xFFFFFFFF);
+            }
+        }
+    }
+
+    private void narysujLewaPaletke(PixelWriter pw, int yl) {
+        for (int x = 4; x < weight + 4; x++) {
+            for (int y = yl; y < height + yl; y++) {
+                pw.setArgb(x, y, 0xFFFFFFFF);
+            }
+        }
     }
 
     public void clearGame(ActionEvent actionEvent) {
@@ -92,5 +115,41 @@ public class Controller {
     public void mouseReleased(Event event) {
         rect(gc);
         System.out.format("%f %f %f %f\n", x1, y1, x2, y2);
+    }
+
+    public void keyReleased(KeyEvent e)
+    {
+        System.out.println("Key Released: " + e.getKeyChar() + "\n");
+    }
+
+    public void keyPressed(KeyEvent e)
+    {
+        System.out.println("Key Pressed: " + e.getKeyChar() + "\n");
+    }
+
+    private void addKeyHandler(Scene scene) {
+        scene.setOnKeyPressed(ke -> {
+            KeyCode keyCode = ke.getCode();
+            if (keyCode.equals(KeyCode.S)) {
+                System.out.println("S");
+                return;
+            }
+            if (keyCode.equals(KeyCode.R)) {
+                System.out.println("R");
+                return;
+            }
+        });
+    }
+
+    private void createScenneEventHandling(Scene scene){
+        //scene.setOnKeyPressed((KeyEvent event)) -> {
+
+        //}
+    }
+    public void clikL(ActionEvent actionEvent) {
+
+    }
+
+    public void clikP(ActionEvent actionEvent) {
     }
 }

@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
 
@@ -21,5 +22,24 @@ public class Pong extends Application {
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
+
+       // Scene scene = new Scene(root);
+        //addKeyHandler(scene);
     }
+
+    /*private void addKeyHandler(Scene scene) {
+        scene.setOnKeyPressed(ke -> {
+            KeyCode keyCode = ke.getCode();
+            if (keyCode.equals(KeyCode.S)) {
+                System.out.println("S");
+                return;
+            }
+            if (keyCode.equals(KeyCode.R)) {
+                System.out.println("R");
+                return;
+            }
+        });
+    } */
+
+
 }
