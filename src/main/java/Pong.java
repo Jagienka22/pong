@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
@@ -20,14 +21,23 @@ public class Pong extends Application {
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("sample.fxml"));
         primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root));
+
+        /*TextField textBox = new TextField();
+        textBox.setPromptText("Write here");
+        textBox.setOnKeyPressed(ke -> System.out.println("Key Pressed: " + ke.getText()));
+        root.getChildren().add(textBox);
+        */
+
+        Scene scene = new Scene(root);
+        addKeyHandler(scene);
+
+        primaryStage.setScene(scene);
         primaryStage.show();
 
-       // Scene scene = new Scene(root);
-        //addKeyHandler(scene);
+
     }
 
-    /*private void addKeyHandler(Scene scene) {
+    private void addKeyHandler(Scene scene) {
         scene.setOnKeyPressed(ke -> {
             KeyCode keyCode = ke.getCode();
             if (keyCode.equals(KeyCode.S)) {
@@ -36,10 +46,9 @@ public class Pong extends Application {
             }
             if (keyCode.equals(KeyCode.R)) {
                 System.out.println("R");
-                return;
             }
         });
-    } */
+    }
 
 
 }
