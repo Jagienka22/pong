@@ -1,8 +1,7 @@
-package Pong;
+package pong;
 
 import javafx.event.ActionEvent;
 import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -21,8 +20,8 @@ import java.awt.event.KeyEvent;
  * Created by aga on 27.11.18.
  */
 public class Controller {
-    public Label label;                                            // Etykieta
-    public Canvas canvas;                                        // "PĹĂłtno" do rysowania
+    private Label label;                                            // Etykieta
+    private Canvas canvas;                                        // "PĹĂłtno" do rysowania
     private GraphicsContext gc;
     private double x1, y1, x2, y2;
     private int weight = 10;
@@ -30,12 +29,18 @@ public class Controller {
     Rectangle rectangle1 = new Rectangle();
     Rectangle rectangle2 = new Rectangle();
 
+    public Controller(Canvas canvas) {
+        this.canvas = canvas;
+    }
+
     public void initialize() {
+        System.out.println(canvas);
         gc = canvas.getGraphicsContext2D();
         clear(gc);
     }
 
     private void clear(GraphicsContext gc) {
+        System.out.println(canvas);
         System.out.println("clear");
         gc.setFill(Color.BLACK);
         gc.setGlobalBlendMode(BlendMode.SRC_OVER);
