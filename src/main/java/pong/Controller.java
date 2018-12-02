@@ -26,8 +26,6 @@ public class Controller {
     private double x1, y1, x2, y2;
     private int weight = 10;
     private int height = 100;
-    Rectangle rectangle1 = new Rectangle();
-    Rectangle rectangle2 = new Rectangle();
 
     public Controller(Canvas canvas) {
         this.canvas = canvas;
@@ -47,15 +45,6 @@ public class Controller {
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
     }
 
-
-    private void rect(GraphicsContext gc) {
-        rectangle1.setX(150.0f);
-        rectangle1.setY(75.0f);
-        rectangle1.setWidth(300.0f);
-        rectangle1.setHeight(150.0f);
-
-    }
-
     public void draw(ActionEvent actionEvent) {
         System.out.println("draw");
 
@@ -65,8 +54,10 @@ public class Controller {
         narysujLewaPaletke(pw, 300-(height/2));
 
         narysujPrawaPaletke(pw, 300+(height/2));
+
 // przy próbach robienia czegokolwiek zostawic karty w przegladarce ktore nie pomogly i wynomentowany
 // kod który nie działał - ma być go przynajmniej 4 próby na każdą rzecz
+
         narysujPilke(pw, 100, 100);
 
 
@@ -82,7 +73,6 @@ public class Controller {
         }
     }
 
-    //znalezc cos w javie fx do czytania klawiszy, jak ktos nacisnie klawisz "w" w aplikacji sout'nąć "w"
 
     //dodaj 2 klawisze "P" i "L" i okno/pole tekstowe z "0 : 0" na pasku klawiszy
     // i niech przyciścięcie "P" zwiększa prawą liczbę o 1 a "L" lewą
@@ -118,7 +108,6 @@ public class Controller {
     }
 
     public void mouseReleased(Event event) {
-        rect(gc);
         System.out.format("%f %f %f %f\n", x1, y1, x2, y2);
     }
 
