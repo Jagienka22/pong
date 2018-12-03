@@ -3,6 +3,8 @@
  */
 
 import javafx.application.Application;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -14,6 +16,9 @@ import javafx.stage.Stage;
 import pong.Controller;
 
 public class Pong extends Application {
+    private int numberP = 0;
+    private int numberL = 0;
+    private Label label;
 
     public static void main(String[] args) {
         launch(args);
@@ -27,11 +32,6 @@ public class Pong extends Application {
         gridPane.setHgap(10);
         gridPane.setVgap(10);
 
-        /*TextField textBox = new TextField();
-        textBox.setPromptText("Write here");
-        textBox.setOnKeyPressed(ke -> System.out.println("Key Pressed: " + ke.getText()));
-        root.getChildren().add(textBox);
-        */
         Canvas pole = new Canvas(900, 600);
         gridPane.add(pole, 0, 0, 1, 6);
 
@@ -48,13 +48,14 @@ public class Pong extends Application {
 
         Button L = new Button("L");
         gridPane.add(L, 1, 9, 1, 6);
-        L.setOnAction(con::clikL);
+        L.setOnAction(this::clikL);
 
         Button P = new Button("P");
         gridPane.add(P, 2, 9, 1, 6);
-        P.setOnAction(con::clikP);
+        P.setOnAction(this::clikP);//przenies ta metode tu i niech ona zwieksza ktoras z liczb
 
-        Label label = new Label("         0  :  0");
+        //wydziel liczby zeby dalo sie je zmieniac
+        label = new Label(numberL + " : " + numberP);
         gridPane.add(label, 1, 12, 1, 6);
 
         Scene scene = new Scene(gridPane, 1100, 600);
@@ -64,9 +65,24 @@ public class Pong extends Application {
         primaryStage.show();
     }
 
+    public void clikL(ActionEvent actionEvent) {
+        numberL++;
+        displayNewLabel();
+    }
+
+    private void displayNewLabel() {
+        SimpleStringProperty valueProperty = new SimpleStringProperty(numberL + " : " + numberP);
+        label.textProperty().bind(valueProperty);
+    }
+
+    public void clikP(ActionEvent actionEvent) {
+        numberP++;
+        displayNewLabel();
+    }
+
     private void addKeyHandler(Scene scene) {
-        scene.setOnKeyPressed(ke -> {
-            KeyCode keyCode = ke.getCode();
+        scene.setOnKeyPressed(keyEvent -> {
+            KeyCode keyCode = keyEvent.getCode();
             if (keyCode.equals(KeyCode.S)) {
                 System.out.println("S");
                 return;

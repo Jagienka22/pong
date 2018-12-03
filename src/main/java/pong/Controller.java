@@ -140,10 +140,11 @@ public class Controller {
 
         //}
     }
+    /*
     public void clikL(ActionEvent actionEvent) {
 
     }
 
     public void clikP(ActionEvent actionEvent) {
-    }
+    }*/
 }
