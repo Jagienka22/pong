@@ -26,6 +26,9 @@ public class Controller {
     private double x1, y1, x2, y2;
     private int weight = 10;
     private int height = 100;
+    private int wysokoscL = 300;
+    private int wysokoscP= 299;
+
 
     public Controller(Canvas canvas) {
         this.canvas = canvas;
@@ -45,8 +48,8 @@ public class Controller {
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
     }
 
-    public void draw(ActionEvent actionEvent) {
-        System.out.println("draw");
+    public void initialDraw(ActionEvent actionEvent) {
+        System.out.println("initialDraw");
 
         WritableImage wr = new WritableImage(900, 600);
         PixelWriter pw = wr.getPixelWriter();
@@ -55,11 +58,97 @@ public class Controller {
 
         narysujPrawaPaletke(pw, 300+(height/2));
 
-// przy próbach robienia czegokolwiek zostawic karty w przegladarce ktore nie pomogly i wynomentowany
-// kod który nie działał - ma być go przynajmniej 4 próby na każdą rzecz
+        narysujPilke(pw, 100, 100);
+
+        gc.setGlobalBlendMode(BlendMode.SRC_OVER);
+        gc.drawImage(wr, 0, 0, 900, 600);
+    }
+
+    public void drawLeftAgainDown() {
+        clear(gc);
+        System.out.println("drawLeftAgainDown");
+
+        WritableImage wr = new WritableImage(900, 600);
+        PixelWriter pw = wr.getPixelWriter();
+
+        if(wysokoscL > 540){
+            wysokoscL = 540;
+        }
+        wysokoscL = wysokoscL +10;
+        narysujLewaPaletke(pw, wysokoscL - (height / 2));
+        System.out.println("wysokosc:"+ wysokoscL);
+
+
+        narysujPrawaPaletke(pw, 300+(height/2));
 
         narysujPilke(pw, 100, 100);
 
+        gc.setGlobalBlendMode(BlendMode.SRC_OVER);
+        gc.drawImage(wr, 0, 0, 900, 600);
+    }
+
+    public void drawLeftAgainUp() {
+        clear(gc);
+        System.out.println("drawLeftAgainUp");
+
+        WritableImage wr = new WritableImage(900, 600);
+        PixelWriter pw = wr.getPixelWriter();
+
+        if(wysokoscL <120){
+            wysokoscL = 120;
+        }
+        wysokoscL = wysokoscL - 10;
+        narysujLewaPaletke(pw, wysokoscL - (height / 2));
+        System.out.println("wysokosc:"+ wysokoscL);
+
+
+        narysujPrawaPaletke(pw, 300+(height/2));
+
+        narysujPilke(pw, 100, 100);
+
+        gc.setGlobalBlendMode(BlendMode.SRC_OVER);
+        gc.drawImage(wr, 0, 0, 900, 600);
+    }
+
+    public void drawRightAgainDown() {
+        clear(gc);
+        System.out.println("drawRightgainDown");
+
+        WritableImage wr = new WritableImage(900, 600);
+        PixelWriter pw = wr.getPixelWriter();
+
+        if(wysokoscP > 539) {
+            wysokoscP = 539;
+        }
+        wysokoscP = wysokoscP + 10;
+        narysujLewaPaletke(pw, 300 - (height / 2));
+
+        narysujPrawaPaletke(pw, wysokoscP +(height/2));
+        System.out.println(wysokoscP);
+
+        narysujPilke(pw, 100, 100);
+
+        gc.setGlobalBlendMode(BlendMode.SRC_OVER);
+        gc.drawImage(wr, 0, 0, 900, 600);
+    }
+
+    public void drawRightAgainUp() {
+        clear(gc);
+        System.out.println("drawRighttAgainUp");
+
+        WritableImage wr = new WritableImage(900, 600);
+        PixelWriter pw = wr.getPixelWriter();
+
+        if(wysokoscP <119) {
+            wysokoscP = 119;
+        }
+        wysokoscP = wysokoscP - 10;
+        narysujLewaPaletke(pw, 300 - (height / 2));
+
+        narysujPrawaPaletke(pw, wysokoscP +(height/2));
+        System.out.println(wysokoscP);
+
+        narysujPilke(pw, 100, 100);
 
         gc.setGlobalBlendMode(BlendMode.SRC_OVER);
         gc.drawImage(wr, 0, 0, 900, 600);
@@ -148,3 +237,7 @@ public class Controller {
     public void clikP(ActionEvent actionEvent) {
     }*/
 }
+
+//wywalic niepotrzebne linie w metodach
+// bug przy kliknieciu zakoncz (pamieta wczesniejsze pola)
+//ruch kazdej paletki w jednej metodzie

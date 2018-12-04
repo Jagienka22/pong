@@ -11,6 +11,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import pong.Controller;
@@ -19,6 +20,7 @@ public class Pong extends Application {
     private int numberP = 0;
     private int numberL = 0;
     private Label label;
+    private Controller con;
 
     public static void main(String[] args) {
         launch(args);
@@ -26,7 +28,7 @@ public class Pong extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("MineCraft Pong");
         GridPane gridPane = new GridPane();
         gridPane.setAlignment(Pos.CENTER);
         gridPane.setHgap(10);
@@ -35,12 +37,12 @@ public class Pong extends Application {
         Canvas pole = new Canvas(900, 600);
         gridPane.add(pole, 0, 0, 1, 6);
 
-        Controller con = new Controller(pole);
+        con = new Controller(pole);
         con.initialize();
 
         Button zagraj = new Button("Zagraj");
         gridPane.add(zagraj, 1, 0, 1, 6);
-        zagraj.setOnAction(con::draw);
+        zagraj.setOnAction(con::initialDraw);
 
         Button zakoncz = new Button("Zakoncz");
         gridPane.add(zakoncz, 2, 0, 1, 6);
@@ -82,13 +84,25 @@ public class Pong extends Application {
 
     private void addKeyHandler(Scene scene) {
         scene.setOnKeyPressed(keyEvent -> {
-            KeyCode keyCode = keyEvent.getCode();
-            if (keyCode.equals(KeyCode.S)) {
-                System.out.println("S");
+            KeyEvent keyEvent1 = keyEvent;
+            KeyCode keyCode = keyEvent1.getCode();
+            if (keyCode.equals(KeyCode.W)) {
+               con.drawLeftAgainUp();
+                System.out.println("W");
                 return;
             }
-            if (keyCode.equals(KeyCode.R)) {
-                System.out.println("R");
+            if (keyCode.equals(KeyCode.S)) {
+                con.drawLeftAgainDown();
+                System.out.println("S");
+            }
+
+            if (keyCode.equals(KeyCode.DOWN)) {
+                con.drawRightAgainDown();
+                System.out.println("Arrow Down");
+            }
+
+            if(keyCode.equals(KeyCode.UP)){
+                con.drawRightAgainUp();
             }
         });
     }
