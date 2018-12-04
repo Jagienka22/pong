@@ -1,6 +1,4 @@
-/**
- * Created by aga on 27.11.18.
- */
+package pong;
 
 import javafx.application.Application;
 import javafx.beans.property.SimpleStringProperty;
@@ -14,7 +12,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import pong.Controller;
+
 
 public class Pong extends Application {
     private int numberP = 0;
@@ -28,7 +26,7 @@ public class Pong extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        primaryStage.setTitle("MineCraft Pong");
+        primaryStage.setTitle("MineCraft");
         GridPane gridPane = new GridPane();
         gridPane.setAlignment(Pos.CENTER);
         gridPane.setHgap(10);
@@ -65,6 +63,9 @@ public class Pong extends Application {
 
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        MyThread myThread = new MyThread(con);
+        myThread.start();
     }
 
     public void clikL(ActionEvent actionEvent) {
@@ -87,7 +88,7 @@ public class Pong extends Application {
             KeyEvent keyEvent1 = keyEvent;
             KeyCode keyCode = keyEvent1.getCode();
             if (keyCode.equals(KeyCode.W)) {
-               con.drawLeftAgainUp();
+                con.drawLeftAgainUp();
                 System.out.println("W");
                 return;
             }
@@ -101,9 +102,11 @@ public class Pong extends Application {
                 System.out.println("Arrow Down");
             }
 
-            if(keyCode.equals(KeyCode.UP)){
+            if (keyCode.equals(KeyCode.UP)) {
                 con.drawRightAgainUp();
             }
         });
     }
 }
+
+

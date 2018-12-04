@@ -9,9 +9,7 @@ import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 
-/**
- * Created by aga on 27.11.18.
- */
+
 public class Controller {
     private Label label;                                            // Etykieta
     private Canvas canvas;                                        // "PĹĂłtno" do rysowania
@@ -41,104 +39,62 @@ public class Controller {
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
     }
 
-    public void initialDraw(ActionEvent actionEvent) {
+    public void draw() {
+        clear(gc);
         WritableImage wr = new WritableImage(900, 600);
         PixelWriter pw = wr.getPixelWriter();
 
-        narysujLewaPaletke(pw, 300 - (height / 2));
-
-        narysujPrawaPaletke(pw, 300 + (height / 2));
-
-        narysujPilke(pw, 100, 100);
+        narysujLewaPaletke(pw, wysokoscL - (height / 2));
+        narysujPrawaPaletke(pw, wysokoscP + (height / 2));
+        narysujPilke(pw, 237);
 
         gc.setGlobalBlendMode(BlendMode.SRC_OVER);
         gc.drawImage(wr, 0, 0, 900, 600);
+    }
+
+    public void initialDraw(ActionEvent actionEvent) {
+        draw();
     }
 
     public void drawLeftAgainDown() {
-        clear(gc);
-
-        WritableImage wr = new WritableImage(900, 600);
-        PixelWriter pw = wr.getPixelWriter();
-
-        if (wysokoscL > 540) {
+        if (wysokoscL > 540) {//te ify nie sa dobre, 4 linie powinny byc trzema liniami
             wysokoscL = 540;
         }
         wysokoscL = wysokoscL + 10;
-        narysujLewaPaletke(pw, wysokoscL - (height / 2));
 
-
-        narysujPrawaPaletke(pw, wysokoscP + (height / 2));
-
-        narysujPilke(pw, 100, 100);
-
-        gc.setGlobalBlendMode(BlendMode.SRC_OVER);
-        gc.drawImage(wr, 0, 0, 900, 600);
+        //draw();
     }
 
     public void drawLeftAgainUp() {
-        clear(gc);
-
-        WritableImage wr = new WritableImage(900, 600);
-        PixelWriter pw = wr.getPixelWriter();
-
         if (wysokoscL < 120) {
             wysokoscL = 120;
         }
         wysokoscL = wysokoscL - 10;
-        narysujLewaPaletke(pw, wysokoscL - (height / 2));
 
-        narysujPrawaPaletke(pw, wysokoscP + (height / 2));
-
-        narysujPilke(pw, 100, 100);
-
-        gc.setGlobalBlendMode(BlendMode.SRC_OVER);
-        gc.drawImage(wr, 0, 0, 900, 600);
+        //draw();
     }
 
     public void drawRightAgainDown() {
-        clear(gc);
-
-        WritableImage wr = new WritableImage(900, 600);
-        PixelWriter pw = wr.getPixelWriter();
-
         if (wysokoscP > 539) {
             wysokoscP = 539;
         }
         wysokoscP = wysokoscP + 10;
-        narysujLewaPaletke(pw, wysokoscL - (height / 2));
 
-        narysujPrawaPaletke(pw, wysokoscP + (height / 2));
-
-        narysujPilke(pw, 100, 100);
-
-        gc.setGlobalBlendMode(BlendMode.SRC_OVER);
-        gc.drawImage(wr, 0, 0, 900, 600);
+        //draw();
     }
 
     public void drawRightAgainUp() {
-        clear(gc);
-
-        WritableImage wr = new WritableImage(900, 600);
-        PixelWriter pw = wr.getPixelWriter();
-
         if (wysokoscP < 119) {
             wysokoscP = 119;
         }
         wysokoscP = wysokoscP - 10;
-        narysujLewaPaletke(pw, wysokoscL - (height / 2));
 
-        narysujPrawaPaletke(pw, wysokoscP + (height / 2));
-
-        narysujPilke(pw, 100, 100);
-
-        gc.setGlobalBlendMode(BlendMode.SRC_OVER);
-        gc.drawImage(wr, 0, 0, 900, 600);
+        //draw();
     }
 
-    private void narysujPilke(PixelWriter pw, int kierunekX, int kierunekY) {
-        for (int x = 447 + kierunekX; x < 459 + kierunekX; x++) { //czy to jest srodek planszy - jak nie to zmienic x i y
-            for (int y = 297 - kierunekY; y < 309 - kierunekY; y++) {//bedzie sie przemieszczal o jeden piksel w ukosie
+    private void narysujPilke(PixelWriter pw, int kierunek) {
+        for (int x = 447 + kierunek; x < 459 + kierunek; x++) { //czy to jest srodek planszy - jak nie to zmienic x i y
+            for (int y = 297 - kierunek; y < 309 - kierunek; y++) {//bedzie sie przemieszczal o jeden piksel w ukosie
                 pw.setArgb(x, y, 0xFFFFFFFF);//- wyestraktowac medote a potem przesunac o 10 w gore i prawo
             }
         }
@@ -169,6 +125,5 @@ public class Controller {
     }
 }
 
-//wywalic niepotrzebne linie w metodach
 // bug przy kliknieciu zakoncz (pamieta wczesniejsze pola)
 //ruch kazdej paletki w jednej metodzie
