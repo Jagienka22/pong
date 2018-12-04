@@ -1,20 +1,13 @@
 package pong;
 
 import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.effect.BlendMode;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-
-import java.awt.event.KeyEvent;
 
 /**
  * Created by aga on 27.11.18.
@@ -27,7 +20,7 @@ public class Controller {
     private int weight = 10;
     private int height = 100;
     private int wysokoscL = 300;
-    private int wysokoscP= 299;
+    private int wysokoscP = 299;
 
 
     public Controller(Canvas canvas) {
@@ -49,14 +42,12 @@ public class Controller {
     }
 
     public void initialDraw(ActionEvent actionEvent) {
-        System.out.println("initialDraw");
-
         WritableImage wr = new WritableImage(900, 600);
         PixelWriter pw = wr.getPixelWriter();
 
-        narysujLewaPaletke(pw, 300-(height/2));
+        narysujLewaPaletke(pw, 300 - (height / 2));
 
-        narysujPrawaPaletke(pw, 300+(height/2));
+        narysujPrawaPaletke(pw, 300 + (height / 2));
 
         narysujPilke(pw, 100, 100);
 
@@ -66,20 +57,18 @@ public class Controller {
 
     public void drawLeftAgainDown() {
         clear(gc);
-        System.out.println("drawLeftAgainDown");
 
         WritableImage wr = new WritableImage(900, 600);
         PixelWriter pw = wr.getPixelWriter();
 
-        if(wysokoscL > 540){
+        if (wysokoscL > 540) {
             wysokoscL = 540;
         }
-        wysokoscL = wysokoscL +10;
+        wysokoscL = wysokoscL + 10;
         narysujLewaPaletke(pw, wysokoscL - (height / 2));
-        System.out.println("wysokosc:"+ wysokoscL);
 
 
-        narysujPrawaPaletke(pw, 300+(height/2));
+        narysujPrawaPaletke(pw, wysokoscP + (height / 2));
 
         narysujPilke(pw, 100, 100);
 
@@ -89,20 +78,17 @@ public class Controller {
 
     public void drawLeftAgainUp() {
         clear(gc);
-        System.out.println("drawLeftAgainUp");
 
         WritableImage wr = new WritableImage(900, 600);
         PixelWriter pw = wr.getPixelWriter();
 
-        if(wysokoscL <120){
+        if (wysokoscL < 120) {
             wysokoscL = 120;
         }
         wysokoscL = wysokoscL - 10;
         narysujLewaPaletke(pw, wysokoscL - (height / 2));
-        System.out.println("wysokosc:"+ wysokoscL);
 
-
-        narysujPrawaPaletke(pw, 300+(height/2));
+        narysujPrawaPaletke(pw, wysokoscP + (height / 2));
 
         narysujPilke(pw, 100, 100);
 
@@ -112,19 +98,17 @@ public class Controller {
 
     public void drawRightAgainDown() {
         clear(gc);
-        System.out.println("drawRightgainDown");
 
         WritableImage wr = new WritableImage(900, 600);
         PixelWriter pw = wr.getPixelWriter();
 
-        if(wysokoscP > 539) {
+        if (wysokoscP > 539) {
             wysokoscP = 539;
         }
         wysokoscP = wysokoscP + 10;
-        narysujLewaPaletke(pw, 300 - (height / 2));
+        narysujLewaPaletke(pw, wysokoscL - (height / 2));
 
-        narysujPrawaPaletke(pw, wysokoscP +(height/2));
-        System.out.println(wysokoscP);
+        narysujPrawaPaletke(pw, wysokoscP + (height / 2));
 
         narysujPilke(pw, 100, 100);
 
@@ -134,19 +118,17 @@ public class Controller {
 
     public void drawRightAgainUp() {
         clear(gc);
-        System.out.println("drawRighttAgainUp");
 
         WritableImage wr = new WritableImage(900, 600);
         PixelWriter pw = wr.getPixelWriter();
 
-        if(wysokoscP <119) {
+        if (wysokoscP < 119) {
             wysokoscP = 119;
         }
         wysokoscP = wysokoscP - 10;
-        narysujLewaPaletke(pw, 300 - (height / 2));
+        narysujLewaPaletke(pw, wysokoscL - (height / 2));
 
-        narysujPrawaPaletke(pw, wysokoscP +(height/2));
-        System.out.println(wysokoscP);
+        narysujPrawaPaletke(pw, wysokoscP + (height / 2));
 
         narysujPilke(pw, 100, 100);
 
@@ -155,8 +137,8 @@ public class Controller {
     }
 
     private void narysujPilke(PixelWriter pw, int kierunekX, int kierunekY) {
-        for (int x = 447 + kierunekX; x<459 + kierunekX;x++) { //czy to jest srodek planszy - jak nie to zmienic x i y
-            for (int y = 297 - kierunekY; y<309-kierunekY; y++) {//bedzie sie przemieszczal o jeden piksel w ukosie
+        for (int x = 447 + kierunekX; x < 459 + kierunekX; x++) { //czy to jest srodek planszy - jak nie to zmienic x i y
+            for (int y = 297 - kierunekY; y < 309 - kierunekY; y++) {//bedzie sie przemieszczal o jeden piksel w ukosie
                 pw.setArgb(x, y, 0xFFFFFFFF);//- wyestraktowac medote a potem przesunac o 10 w gore i prawo
             }
         }
@@ -167,8 +149,8 @@ public class Controller {
     // i niech przyciścięcie "P" zwiększa prawą liczbę o 1 a "L" lewą
 
     private void narysujPrawaPaletke(PixelWriter pw, int yp) {
-        for (int x = 896; x >896 - weight;x--) {
-            for (int y = yp; y>yp - height ; y--) {
+        for (int x = 896; x > 896 - weight; x--) {
+            for (int y = yp; y > yp - height; y--) {
                 pw.setArgb(x, y, 0xFFFFFFFF);
             }
         }
@@ -185,57 +167,6 @@ public class Controller {
     public void clearGame(ActionEvent actionEvent) {
         clear(gc);
     }
-
-    public void mouseMoves(Event event) {
-    }
-
-    public void mousePressed(MouseEvent mouseEvent) {
-        x1 = mouseEvent.getX();
-        y1 = mouseEvent.getY();
-        x2 = x1;
-        y2 = y1;
-    }
-
-    public void mouseReleased(Event event) {
-        System.out.format("%f %f %f %f\n", x1, y1, x2, y2);
-    }
-
-    public void keyReleased(KeyEvent e)
-    {
-        System.out.println("Key Released: " + e.getKeyChar() + "\n");
-    }
-
-    public void keyPressed(KeyEvent e)
-    {
-        System.out.println("Key Pressed: " + e.getKeyChar() + "\n");
-    }
-
-    private void addKeyHandler(Scene scene) {
-        scene.setOnKeyPressed(ke -> {
-            KeyCode keyCode = ke.getCode();
-            if (keyCode.equals(KeyCode.S)) {
-                System.out.println("S");
-                return;
-            }
-            if (keyCode.equals(KeyCode.R)) {
-                System.out.println("R");
-                return;
-            }
-        });
-    }
-
-    private void createScenneEventHandling(Scene scene){
-        //scene.setOnKeyPressed((KeyEvent event)) -> {
-
-        //}
-    }
-    /*
-    public void clikL(ActionEvent actionEvent) {
-
-    }
-
-    public void clikP(ActionEvent actionEvent) {
-    }*/
 }
 
 //wywalic niepotrzebne linie w metodach
