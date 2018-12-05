@@ -10,11 +10,13 @@ public class MyThread extends Thread {
     public void run() {
         while (true) {
             con.draw();
+            con.iterate();
             try {
-                Thread.sleep(100);//lub 500
+                Thread.sleep(50);//lub 500
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
         }
     }
 }
