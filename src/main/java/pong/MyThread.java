@@ -12,7 +12,7 @@ public class MyThread extends Thread {
             con.draw();
             con.iterate();
             try {
-                Thread.sleep(50);//lub 500
+                Thread.sleep(500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

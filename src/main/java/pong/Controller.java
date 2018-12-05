@@ -39,7 +39,7 @@ public class Controller {
 
     public void draw() {
         clear(gc);
-        WritableImage wr = new WritableImage(900, 600);
+        WritableImage wr = new WritableImage(898, 600);
         PixelWriter pw = wr.getPixelWriter();
 
         narysujLewaPaletke(pw, wysokoscL - (height / 2));
@@ -83,7 +83,7 @@ public class Controller {
     }
 
     private void ruchPilki(PixelWriter pw, int kierunekx, int kieruneky) {
-        for (int x = 447 + kierunekx; x < 459 + kierunekx; x++) { //czy to jest srodek planszy - jak nie to zmienic x i y
+        for (int x = 444 + kierunekx; x < 454 + kierunekx; x++) { //czy to jest srodek planszy - jak nie to zmienic x i y
             for (int y = 297 - kieruneky; y < 309 - kieruneky; y++) {
                 pw.setArgb(x, y, 0xFFFFFFFF);
             }
@@ -91,22 +91,19 @@ public class Controller {
     }
 
     public void iterate() {
-        if (kieruneky >= 237 || kieruneky <=(-283) ){
-            znakOperacjiY = znakOperacjiY*(-1);
+        if (kieruneky > 234 || kieruneky <= (-283)) {
+            znakOperacjiY = znakOperacjiY * (-1);
         }
         kieruneky = kieruneky + (10 * znakOperacjiY);
 
-        if (kierunekx >= 440 || kierunekx<=(-440)) {
-            znakOperacjiX = znakOperacjiX*(-1);
+        if (kierunekx > 420 || kierunekx < (-420)) {
+            znakOperacjiX = znakOperacjiX * (-1);
         }
         kierunekx = kierunekx + (10 * znakOperacjiX);
     }
 
-    //dodaj 2 klawisze "P" i "L" i okno/pole tekstowe z "0 : 0" na pasku klawiszy
-    // i niech przyciścięcie "P" zwiększa prawą liczbę o 1 a "L" lewą
-
     private void narysujPrawaPaletke(PixelWriter pw, int yp) {
-        for (int x = 896; x > 896 - weight; x--) {
+        for (int x = 893; x > 893 - weight; x--) {
             for (int y = yp; y > yp - height; y--) {
                 pw.setArgb(x, y, 0xFFFFFFFF);
             }

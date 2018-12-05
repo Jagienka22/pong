@@ -9,7 +9,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -85,21 +84,17 @@ public class Pong extends Application {
 
     private void addKeyHandler(Scene scene) {
         scene.setOnKeyPressed(keyEvent -> {
-            KeyEvent keyEvent1 = keyEvent;
-            KeyCode keyCode = keyEvent1.getCode();
+            KeyCode keyCode = keyEvent.getCode();
             if (keyCode.equals(KeyCode.W)) {
                 con.drawLeftAgainUp();
-                System.out.println("W");
                 return;
             }
             if (keyCode.equals(KeyCode.S)) {
                 con.drawLeftAgainDown();
-                System.out.println("S");
             }
 
             if (keyCode.equals(KeyCode.DOWN)) {
                 con.drawRightAgainDown();
-                System.out.println("Arrow Down");
             }
 
             if (keyCode.equals(KeyCode.UP)) {
