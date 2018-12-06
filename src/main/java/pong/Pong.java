@@ -1,8 +1,6 @@
 package pong;
 
 import javafx.application.Application;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -12,13 +10,11 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-
 public class Pong extends Application {
     private static int numberP = 0;
     private static int numberL = 0;
     private static Label label;
     private Controller con;
-
 
     public static void main(String[] args) {
         launch(args);
@@ -38,26 +34,16 @@ public class Pong extends Application {
         label = new Label(0 + " : " + 0);
         gridPane.add(label, 1, 12, 1, 6);
 
-        con = new Controller(pole, this);
+        con = new Controller(pole);
         con.initialize();
 
-        Button zagraj = new Button("Zagraj");
-        gridPane.add(zagraj, 1, 0, 1, 6);
-        zagraj.setOnAction(con::initialDraw);
-
-        Button zakoncz = new Button("Zakoncz");
-        gridPane.add(zakoncz, 2, 0, 1, 6);
-        zakoncz.setOnAction(con::clearGame);
-
-//        Button L = new Button("L");
-//        gridPane.add(L, 1, 9, 1, 6);
-//        L.setOnAction(this::clikL);
+//        Button zagraj = new Button("Zagraj");
+//        gridPane.add(zagraj, 1, 0, 1, 6);
+//        zagraj.setOnAction(con::initialDraw);
 //
-//        Button P = new Button("P");
-//        gridPane.add(P, 2, 9, 1, 6);
-//        P.setOnAction(this::clikP);//przenies ta metode tu i niech ona zwieksza ktoras z liczb
-
-        //wydziel liczby zeby dalo sie je zmieniac
+//        Button zakoncz = new Button("Zakoncz");
+//        gridPane.add(zakoncz, 2, 0, 1, 6);
+//        zakoncz.setOnAction(con::clearGame);
 
         Scene scene = new Scene(gridPane, 1100, 600);
         addKeyHandler(scene);
@@ -77,7 +63,6 @@ public class Pong extends Application {
 
     private static void displayNewLabel() {
         label.setText(numberL + " : " + numberP);
-//        label.textProperty().bind(valueProperty);
     }
 
     public static void clikP() {
