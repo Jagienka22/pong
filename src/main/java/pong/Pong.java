@@ -14,9 +14,9 @@ import javafx.stage.Stage;
 
 
 public class Pong extends Application {
-    private int numberP = 0;
-    private int numberL = 0;
-    private Label label;
+    private static int numberP = 0;
+    private static int numberL = 0;
+    private static Label label;
     private Controller con;
 
 
@@ -38,7 +38,7 @@ public class Pong extends Application {
         label = new Label(0 + " : " + 0);
         gridPane.add(label, 1, 12, 1, 6);
 
-        con = new Controller(pole, label);
+        con = new Controller(pole, this);
         con.initialize();
 
         Button zagraj = new Button("Zagraj");
@@ -49,13 +49,13 @@ public class Pong extends Application {
         gridPane.add(zakoncz, 2, 0, 1, 6);
         zakoncz.setOnAction(con::clearGame);
 
-        Button L = new Button("L");
-        gridPane.add(L, 1, 9, 1, 6);
-        L.setOnAction(this::clikL);
-
-        Button P = new Button("P");
-        gridPane.add(P, 2, 9, 1, 6);
-        P.setOnAction(this::clikP);//przenies ta metode tu i niech ona zwieksza ktoras z liczb
+//        Button L = new Button("L");
+//        gridPane.add(L, 1, 9, 1, 6);
+//        L.setOnAction(this::clikL);
+//
+//        Button P = new Button("P");
+//        gridPane.add(P, 2, 9, 1, 6);
+//        P.setOnAction(this::clikP);//przenies ta metode tu i niech ona zwieksza ktoras z liczb
 
         //wydziel liczby zeby dalo sie je zmieniac
 
@@ -70,17 +70,17 @@ public class Pong extends Application {
     }
 
 
-    public void clikL(ActionEvent actionEvent) {
+    public static void clikL() {
         numberL++;
         displayNewLabel();
     }
 
-    private void displayNewLabel() {
-        SimpleStringProperty valueProperty = new SimpleStringProperty(numberL + " : " + numberP);
-        label.textProperty().bind(valueProperty);
+    private static void displayNewLabel() {
+        label.setText(numberL + " : " + numberP);
+//        label.textProperty().bind(valueProperty);
     }
 
-    public void clikP(ActionEvent actionEvent) {
+    public static void clikP() {
         numberP++;
         displayNewLabel();
     }

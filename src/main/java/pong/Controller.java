@@ -1,5 +1,6 @@
 package pong;
 
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.scene.canvas.Canvas;
@@ -13,7 +14,7 @@ import javafx.scene.paint.Color;
 
 public class Controller {
     private Canvas canvas;
-    private Label label;// "PĹĂłtno" do rysowania
+    private Pong label;// "PĹĂłtno" do rysowania
     private GraphicsContext gc;
     private int weight = 10;
     private int height = 100;
@@ -26,7 +27,7 @@ public class Controller {
     private int numberP = 0;
     private int numberL = 0;
 
-    public Controller(Canvas canvas, Label label) {
+    public Controller(Canvas canvas, Pong label) {
         this.canvas = canvas;
         this.label = label;
     }
@@ -109,7 +110,8 @@ public class Controller {
             int dolPrawejPaletki = wysokoscP + (height / 2);
             int goraPrawejPaletki = dolPrawejPaletki - 99;
             if (!(dolPiki > goraPrawejPaletki && goraPilki < dolPrawejPaletki)) {
-                clikL();
+                Platform.runLater(Pong::clikL);
+                //label.clikL();
                 //System.out.println("prawy: dolPiki: " + dolPiki + " goraPilki " + goraPilki + " dolPrawejPaletki " + dolPrawejPaletki + " goraPrawejPaletki " + goraPrawejPaletki);
             }
         }
@@ -122,7 +124,8 @@ public class Controller {
             int goraLewejPaletki = wysokoscL - (height / 2);
             int dolLewejPaletki = goraLewejPaletki + 99;
             if (!(dolPiki > goraLewejPaletki && goraPilki < dolLewejPaletki)) {
-                clikP();
+//                label.clikP();
+                Platform.runLater(Pong::clikP);
                 //System.out.println("lewy: dolPiki: " + dolPiki + " goraPilki " + goraPilki + " dolPrawejPaletki " + dolLewejPaletki + " goraPrawejPaletki " + goraLewejPaletki);
 
             }
@@ -150,24 +153,24 @@ public class Controller {
     public void clearGame(ActionEvent actionEvent) {
         clear(gc);
     }
-
-    private void displayNewLabel() {
-        SimpleStringProperty valueProperty = new SimpleStringProperty(numberL + " : " + numberP);
-//        System.out.println("label: "+label);
-//        System.out.println(" textProperty: " + label.textProperty());
-//        System.out.println(" nawias " + numberL + " : " + numberP);
-        label.textProperty().bind(valueProperty);
-    }
-
-    public void clikL() {
-        numberL++;
-        displayNewLabel();
-    }
-
-    public void clikP() {
-        numberP++;
-        displayNewLabel();
-    }
+//
+//    private void displayNewLabel() {
+//        SimpleStringProperty valueProperty = new SimpleStringProperty(numberL + " : " + numberP);
+////        System.out.println("label: "+label);
+////        System.out.println(" textProperty: " + label.textProperty());
+////        System.out.println(" nawias " + numberL + " : " + numberP);
+//        label.textProperty().bind(valueProperty);
+//    }
+//
+//    public void clikL() {
+//        numberL++;
+//        displayNewLabel();
+//    }
+//
+//    public void clikP() {
+//        numberP++;
+//        displayNewLabel();
+//    }
 }
 
 // bug przy kliknieciu zakoncz (pamieta wczesniejsze pola)
