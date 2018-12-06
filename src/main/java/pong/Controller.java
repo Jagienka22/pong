@@ -1,8 +1,10 @@
 package pong;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Label;
 import javafx.scene.effect.BlendMode;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
@@ -10,7 +12,8 @@ import javafx.scene.paint.Color;
 
 
 public class Controller {
-    private Canvas canvas;                                        // "PĹĂłtno" do rysowania
+    private Canvas canvas;
+    private Label label;// "PĹĂłtno" do rysowania
     private GraphicsContext gc;
     private int weight = 10;
     private int height = 100;
@@ -20,10 +23,12 @@ public class Controller {
     private int kieruneky = -3;
     private int znakOperacjiY = 1;
     private int znakOperacjiX = 1;
+    private int numberP = 0;
+    private int numberL = 0;
 
-
-    public Controller(Canvas canvas) {
+    public Controller(Canvas canvas, Label label) {
         this.canvas = canvas;
+        this.label = label;
     }
 
     public void initialize() {
@@ -47,7 +52,7 @@ public class Controller {
         ruchPilki(pw, kierunekx, kieruneky);
 
         gc.setGlobalBlendMode(BlendMode.SRC_OVER);
-        gc.drawImage(wr, 0, 0, 900, 600);
+        gc.drawImage(wr, 0, 0, 898, 600);
     }
 
     public void initialDraw(ActionEvent actionEvent) {
@@ -84,7 +89,7 @@ public class Controller {
 
     private void ruchPilki(PixelWriter pw, int kierunekx, int kieruneky) {
         for (int x = 444 + kierunekx; x < 454 + kierunekx; x++) { //czy to jest srodek planszy - jak nie to zmienic x i y
-            for (int y = 297 - kieruneky; y < 309 - kieruneky; y++) {
+            for (int y = 297 - kieruneky; y < 307 - kieruneky; y++) {
                 pw.setArgb(x, y, 0xFFFFFFFF);
             }
         }
@@ -96,8 +101,32 @@ public class Controller {
         }
         kieruneky = kieruneky + (10 * znakOperacjiY);
 
-        if (kierunekx > 420 || kierunekx < (-420)) {
+        if (kierunekx > 420) {
             znakOperacjiX = znakOperacjiX * (-1);
+
+            int goraPilki = 297 - kieruneky;
+            int dolPiki = goraPilki + 9;
+            int dolPrawejPaletki = wysokoscP + (height / 2);
+            int goraPrawejPaletki = dolPrawejPaletki - 99;
+            if (!(dolPiki > goraPrawejPaletki && goraPilki < dolPrawejPaletki)) {
+                clikL();
+                //System.out.println("prawy: dolPiki: " + dolPiki + " goraPilki " + goraPilki + " dolPrawejPaletki " + dolPrawejPaletki + " goraPrawejPaletki " + goraPrawejPaletki);
+            }
+        }
+
+        if (kierunekx < (-420)) {
+            znakOperacjiX = znakOperacjiX * (-1);
+
+            int goraPilki = 297 - kieruneky;
+            int dolPiki = goraPilki + 9;
+            int goraLewejPaletki = wysokoscL - (height / 2);
+            int dolLewejPaletki = goraLewejPaletki + 99;
+            if (!(dolPiki > goraLewejPaletki && goraPilki < dolLewejPaletki)) {
+                clikP();
+                //System.out.println("lewy: dolPiki: " + dolPiki + " goraPilki " + goraPilki + " dolPrawejPaletki " + dolLewejPaletki + " goraPrawejPaletki " + goraLewejPaletki);
+
+            }
+
         }
         kierunekx = kierunekx + (10 * znakOperacjiX);
     }
@@ -120,6 +149,24 @@ public class Controller {
 
     public void clearGame(ActionEvent actionEvent) {
         clear(gc);
+    }
+
+    private void displayNewLabel() {
+        SimpleStringProperty valueProperty = new SimpleStringProperty(numberL + " : " + numberP);
+//        System.out.println("label: "+label);
+//        System.out.println(" textProperty: " + label.textProperty());
+//        System.out.println(" nawias " + numberL + " : " + numberP);
+        label.textProperty().bind(valueProperty);
+    }
+
+    public void clikL() {
+        numberL++;
+        displayNewLabel();
+    }
+
+    public void clikP() {
+        numberP++;
+        displayNewLabel();
     }
 }
 

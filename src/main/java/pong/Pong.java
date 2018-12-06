@@ -19,6 +19,7 @@ public class Pong extends Application {
     private Label label;
     private Controller con;
 
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -34,7 +35,10 @@ public class Pong extends Application {
         Canvas pole = new Canvas(900, 600);
         gridPane.add(pole, 0, 0, 1, 6);
 
-        con = new Controller(pole);
+        label = new Label(0 + " : " + 0);
+        gridPane.add(label, 1, 12, 1, 6);
+
+        con = new Controller(pole, label);
         con.initialize();
 
         Button zagraj = new Button("Zagraj");
@@ -54,8 +58,6 @@ public class Pong extends Application {
         P.setOnAction(this::clikP);//przenies ta metode tu i niech ona zwieksza ktoras z liczb
 
         //wydziel liczby zeby dalo sie je zmieniac
-        label = new Label(numberL + " : " + numberP);
-        gridPane.add(label, 1, 12, 1, 6);
 
         Scene scene = new Scene(gridPane, 1100, 600);
         addKeyHandler(scene);
@@ -66,6 +68,7 @@ public class Pong extends Application {
         MyThread myThread = new MyThread(con);
         myThread.start();
     }
+
 
     public void clikL(ActionEvent actionEvent) {
         numberL++;
