@@ -16,10 +16,9 @@ public class Controller {
     public static final int MARGIN = 4;
     public static final int PAD_WIDTH = 10;
     public static final int PAD_HEIGHT = 100;
+    public static final int BALL_SIZE = 10;
     private Canvas canvas;
     private GraphicsContext gc;
-    private int width = 10;
-    private int height = 100;
     private int wysokoscL = 300;
     private int wysokoscP = 299;
     private int kierunekx = 0;
@@ -50,7 +49,7 @@ public class Controller {
 
         narysujLewaPaletke(pw, BOARD_HEIGHT/2);
         narysujPrawaPaletke(pw, BOARD_HEIGHT/2);
-        ruchPilki(pw, kierunekx, kieruneky);
+        drawBallInTheMiddle(pw);
 
         gc.setGlobalBlendMode(BlendMode.SRC_OVER);
         gc.drawImage(wr, 0, 0, BOARD_WIDTH, BOARD_HEIGHT);
@@ -60,8 +59,6 @@ public class Controller {
         draw();
     }
     public void newDraw() {
-        width = 10;
-        height = 100;
         wysokoscL = 300;
         wysokoscP = 299;
         kierunekx = 0;
@@ -99,11 +96,15 @@ public class Controller {
         wysokoscP = wysokoscP - 10;
     }
 
-    private void ruchPilki(PixelWriter pw, int kierunekx, int kieruneky) {
-        for (int x = 444 + kierunekx; x < 454 + kierunekx; x++) { //czy to jest srodek planszy - jak nie to zmienic x i y
-            for (int y = 297 - kieruneky; y < 307 - kieruneky; y++) {
+    private void drawBallInTheMiddle(PixelWriter pw) {
+        int x = BOARD_WIDTH/2 - BALL_SIZE/2;
+        for (int i = 0; i < BALL_SIZE; i++) {
+            int y = BOARD_HEIGHT/2 - BALL_SIZE/2;
+            for (int j = 0; j < BALL_SIZE; j++) {
                 pw.setArgb(x, y, WHITE);
+                y++;
             }
+            x++;
         }
 
     }
@@ -119,8 +120,8 @@ public class Controller {
 
             int goraPilki = 297 - kieruneky;
             int dolPiki = goraPilki + 9;
-            int dolPrawejPaletki = wysokoscP + (height / 2);
-            int goraPrawejPaletki = dolPrawejPaletki - 99;
+            int dolPrawejPaletki = wysokoscP + (PAD_HEIGHT / 2);
+            int goraPrawejPaletki = dolPrawejPaletki - (PAD_HEIGHT - 1);
             if (!(dolPiki > goraPrawejPaletki && goraPilki < dolPrawejPaletki)) {
                 Platform.runLater(Pong::clikL);
                 newDraw();
@@ -132,8 +133,8 @@ public class Controller {
 
             int goraPilki = 297 - kieruneky;
             int dolPiki = goraPilki + 9;
-            int goraLewejPaletki = wysokoscL - (height / 2);
-            int dolLewejPaletki = goraLewejPaletki + 99;
+            int goraLewejPaletki = wysokoscL - (PAD_HEIGHT / 2);
+            int dolLewejPaletki = goraLewejPaletki + (PAD_HEIGHT - 1);
             if (!(dolPiki > goraLewejPaletki && goraPilki < dolLewejPaletki)) {
                 Platform.runLater(Pong::clikP);
                 newDraw();
