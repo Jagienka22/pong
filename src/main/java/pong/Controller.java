@@ -10,9 +10,15 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 
 public class Controller {
+    public static final int WHITE = 0xFFFFFFFF;
+    public static final int BOARD_WIDTH = 900;
+    public static final int BOARD_HEIGHT = 600;
+    public static final int MARGIN = 4;
+    public static final int PAD_WIDTH = 10;
+    public static final int PAD_HEIGHT = 100;
     private Canvas canvas;
     private GraphicsContext gc;
-    private int weight = 10;
+    private int width = 10;
     private int height = 100;
     private int wysokoscL = 300;
     private int wysokoscP = 299;
@@ -24,6 +30,7 @@ public class Controller {
     public Controller(Canvas canvas) {
         this.canvas = canvas;
     }
+
 
     public void initialize() {
         gc = canvas.getGraphicsContext2D();
@@ -38,18 +45,29 @@ public class Controller {
 
     public void draw() {
         clear(gc);
-        WritableImage wr = new WritableImage(898, 600);
+        WritableImage wr = new WritableImage(BOARD_WIDTH, BOARD_HEIGHT);
         PixelWriter pw = wr.getPixelWriter();
 
-        narysujLewaPaletke(pw, wysokoscL - (height / 2));
-        narysujPrawaPaletke(pw, wysokoscP + (height / 2));
+        narysujLewaPaletke(pw, BOARD_HEIGHT/2);
+        narysujPrawaPaletke(pw, BOARD_HEIGHT/2);
         ruchPilki(pw, kierunekx, kieruneky);
 
         gc.setGlobalBlendMode(BlendMode.SRC_OVER);
-        gc.drawImage(wr, 0, 0, 898, 600);
+        gc.drawImage(wr, 0, 0, BOARD_WIDTH, BOARD_HEIGHT);
     }
 
     public void initialDraw(ActionEvent actionEvent) {
+        draw();
+    }
+    public void newDraw() {
+        width = 10;
+        height = 100;
+        wysokoscL = 300;
+        wysokoscP = 299;
+        kierunekx = 0;
+        kieruneky = -3;
+        znakOperacjiY = 1;
+        znakOperacjiX = 1;
         draw();
     }
 
@@ -84,9 +102,10 @@ public class Controller {
     private void ruchPilki(PixelWriter pw, int kierunekx, int kieruneky) {
         for (int x = 444 + kierunekx; x < 454 + kierunekx; x++) { //czy to jest srodek planszy - jak nie to zmienic x i y
             for (int y = 297 - kieruneky; y < 307 - kieruneky; y++) {
-                pw.setArgb(x, y, 0xFFFFFFFF);
+                pw.setArgb(x, y, WHITE);
             }
         }
+
     }
 
     public void iterate() {
@@ -104,6 +123,7 @@ public class Controller {
             int goraPrawejPaletki = dolPrawejPaletki - 99;
             if (!(dolPiki > goraPrawejPaletki && goraPilki < dolPrawejPaletki)) {
                 Platform.runLater(Pong::clikL);
+                newDraw();
             }
         }
 
@@ -116,29 +136,39 @@ public class Controller {
             int dolLewejPaletki = goraLewejPaletki + 99;
             if (!(dolPiki > goraLewejPaletki && goraPilki < dolLewejPaletki)) {
                 Platform.runLater(Pong::clikP);
+                newDraw();
             }
         }
         kierunekx = kierunekx + (10 * znakOperacjiX);
     }
 
-    private void narysujPrawaPaletke(PixelWriter pw, int yp) {
-        for (int x = 893; x > 893 - weight; x--) {
-            for (int y = yp; y > yp - height; y--) {
-                pw.setArgb(x, y, 0xFFFFFFFF);
+    private void narysujPrawaPaletke(PixelWriter pw, int middleY) {
+        int x = BOARD_WIDTH-1-MARGIN;
+        for (int i = 0; i < PAD_WIDTH; i++) {
+            int y = middleY-PAD_HEIGHT/2;
+            for (int j = 0; j < PAD_HEIGHT; j++) {
+                pw.setArgb(x, y, WHITE);
+                y++;
             }
+            x--;
         }
     }
 
-    private void narysujLewaPaletke(PixelWriter pw, int yl) {
-        for (int x = 4; x < weight + 4; x++) {
-            for (int y = yl; y < height + yl; y++) {
-                pw.setArgb(x, y, 0xFFFFFFFF);
+    private void narysujLewaPaletke(PixelWriter pw, int middleY) {
+        int x = MARGIN;
+        for (int i = 0; i < PAD_WIDTH; i++) {
+            int y = middleY-PAD_HEIGHT/2;
+            for (int j = 0; j < PAD_HEIGHT; j++) {
+                pw.setArgb(x, y, WHITE);
+                y++;
             }
+            x++;
         }
     }
 
     public void clearGame(ActionEvent actionEvent) {
         clear(gc);
+
     }
 }
 
