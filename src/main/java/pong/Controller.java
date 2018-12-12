@@ -17,9 +17,9 @@ public class Controller {
     public static final int PAD_WIDTH = 10;
     public static final int PAD_HEIGHT = 100;
     public static final int BALL_SIZE = 10;
+    private int wysokoscL = BOARD_HEIGHT/2;
     private Canvas canvas;
     private GraphicsContext gc;
-    private int wysokoscL = 300;
     private int wysokoscP = 299;
     private int kierunekx = 0;
     private int kieruneky = -3;
@@ -47,7 +47,8 @@ public class Controller {
         WritableImage wr = new WritableImage(BOARD_WIDTH, BOARD_HEIGHT);
         PixelWriter pw = wr.getPixelWriter();
 
-        narysujLewaPaletke(pw, BOARD_HEIGHT/2);
+        narysujLewaPaletke(pw, wysokoscL);
+        System.out.println(wysokoscL);
         narysujPrawaPaletke(pw, BOARD_HEIGHT/2);
         drawBallInTheMiddle(pw);
 
@@ -59,26 +60,32 @@ public class Controller {
         draw();
     }
     public void newDraw() {
-        wysokoscL = 300;
-        wysokoscP = 299;
-        kierunekx = 0;
-        kieruneky = -3;
-        znakOperacjiY = 1;
-        znakOperacjiX = 1;
+//        wysokoscL = 300;
+//        wysokoscP = 299;
+//        kierunekx = 0;
+//        kieruneky = -3;
+//        znakOperacjiY = 1;
+//        znakOperacjiX = 1;
         draw();
     }
 
     public void drawLeftAgainDown() {
-        if (wysokoscL > 540) {
-            wysokoscL = 540;
+        if(wysokoscL > BOARD_HEIGHT - 20){
+            wysokoscL = BOARD_HEIGHT -20;
         }
+//        if (wysokoscL > 540) {
+//            wysokoscL = 540;
+//        }
         wysokoscL = wysokoscL + 10;
     }
 
     public void drawLeftAgainUp() {
-        if (wysokoscL < 120) {
-            wysokoscL = 120;
+        if(wysokoscL < 20){
+            wysokoscL = 20;
         }
+//        if (wysokoscL > 120) {
+//            wysokoscL = 120;
+//        }
         wysokoscL = wysokoscL - 10;
     }
 

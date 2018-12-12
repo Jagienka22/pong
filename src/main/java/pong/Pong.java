@@ -51,8 +51,8 @@ public class Pong extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-//        MyThread myThread = new MyThread(con);
-//        myThread.start();
+        MyThread myThread = new MyThread(con);
+        myThread.start();
     }
 
 
